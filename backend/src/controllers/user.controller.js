@@ -31,21 +31,14 @@ exports.signin = async (req, res, next) => {
 		const { username, password } = req.body;
 		const user = await UserModel.findOne({ username });
 		if (!user) {
-			return res.send({
-				msg: 'Credenciales NO válidas. Intentelo de nuevo!',
-				error: 'Unvalid credentials',
-			});
+			return res.status(400).send();
 		}
 		const passOK = await compare(password, user.password);
 		if (passOK) {
 			const token = generateAuthToken(user);
 			return res.status(200).send({ user, token });
-		} else {
-			return res.send({
-				msg: 'Credenciales NO válidas. Intentelo de nuevo!',
-				error: 'Unvalid credentials',
-			});
 		}
+		return res.status(400).send();
 	} catch (error) {
 		console.log('Error iniciando sesión: ' + error);
 		next(error);

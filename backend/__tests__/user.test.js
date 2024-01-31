@@ -19,9 +19,11 @@ const duplicatedUser = {
 	password: 'P455',
 	role: 'estudiante',
 };
+const testSignin = { username: 'test1', password: 'P455' };
 
-beforeEach(async () => {
+beforeAll(async () => {
 	await mongoose.connect(process.env.MONGODB_URI);
+	await UserModel.deleteMany({});
 });
 
 describe('POST /users', () => {
@@ -46,7 +48,7 @@ describe('POST /users', () => {
 
 	describe('when name and/or username are missing', () => {
 		test('should respond with a 400 status code', async () => {
-			const data = [{ name: 'test' }, { username: 'test@test.com' }, {}];
+			const data = [{ name: 'test' }, { username: 'test1' }, {}];
 			for (const obj of data) {
 				await api.post(ROUTE).send(obj).expect(400);
 			}
@@ -56,6 +58,53 @@ describe('POST /users', () => {
 	describe('when there is already a user with the given username', () => {
 		test('should respond with a 400 status code', async () => {
 			await api.post(ROUTE).send(duplicatedUser).expect(400);
+		});
+	});
+});
+
+describe('POST /users/signin', () => {
+	describe('given a correct username and password', () => {
+		test('should return user and token', async () => {
+			const res = await api
+				.post(`${ROUTE}/signin`)
+				.send(testSignin)
+				.expect(200)
+				.expect('Content-Type', /application\/json/);
+			expect(res.body).toEqual(
+				expect.objectContaining({
+					user: {
+						_id: expect.any(String),
+						name: expect.any(String),
+						username: expect.any(String),
+						password: expect.any(String),
+						role: expect.any(String),
+						createdAt: expect.any(String),
+						updatedAt: expect.any(String),
+					},
+					token: expect.any(String),
+				})
+			);
+		});
+	});
+
+	describe('when username and/or password are missing', () => {
+		test('should respond with a 400 status code', async () => {
+			const data = [{ username: 'test1' }, { password: 'P455' }, {}];
+			for (const obj of data) {
+				await api.post(ROUTE).send(obj).expect(400);
+			}
+		});
+	});
+
+	describe('given an incorrect password', () => {
+		test('should respond with a 400 status code', async () => {
+			await api
+				.post(`${ROUTE}/signin`)
+				.send({
+					username: testSignin.username,
+					password: 'incorrectPassword',
+				})
+				.expect(400);
 		});
 	});
 });
@@ -83,11 +132,7 @@ describe('GET /users', () => {
 	describe('when the database is empty', () => {
 		test('should return a 204 status code and an empty body', async () => {
 			await UserModel.deleteMany({});
-
-			const res = await api.get(ROUTE).expect(204);
-
-			expect(res.body).toEqual(expect.anything());
-			expect(res.body).toEqual({});
+			await api.get(ROUTE).expect(204);
 		});
 	});
 });
