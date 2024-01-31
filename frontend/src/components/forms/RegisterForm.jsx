@@ -3,9 +3,14 @@ import { inputUserProps } from './const';
 import useForm from '@/hooks/useForm';
 
 const RegisterForm = () => {
-	const { handleInputChange, handleRegisterSubmit } = useForm({
-		displayName: '',
-		userName: '',
+	const {
+		isStudent,
+		handleInputChange,
+		handleCheckboxChange,
+		handleRegisterSubmit,
+	} = useForm({
+		name: '',
+		username: '',
 		password: '',
 		rePassword: '',
 	});
@@ -26,6 +31,19 @@ const RegisterForm = () => {
 					/>
 				</div>
 			))}
+			<div className='form-check mb-3'>
+				<input
+					className='form-check-input'
+					type='checkbox'
+					value=''
+					id='flexCheckDefault'
+					checked={isStudent}
+					onChange={handleCheckboxChange}
+				/>
+				<label className='form-check-label' htmlFor='flexCheckDefault'>
+					Eres un estudiante?
+				</label>
+			</div>
 			<div className='mb-4'>
 				<button className='btn btn-primary w-100'>REGISTRARSE</button>
 			</div>

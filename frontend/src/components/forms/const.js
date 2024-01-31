@@ -8,7 +8,7 @@ export const inputUserProps = [
 	},
 	{
 		id: 'idUserName',
-		name: 'userName',
+		name: 'username',
 		label: 'Usuario',
 		placeholder: 'Ingresa tu usuario',
 		type: 'text',

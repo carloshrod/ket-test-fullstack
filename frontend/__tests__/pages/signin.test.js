@@ -17,7 +17,7 @@ describe('SignIn page', () => {
 		expect(getByText('KUEPA')).toBeInTheDocument();
 		expect(getByText('Ingresa a la plataforma:')).toBeInTheDocument();
 
-		expect(getByText('Correo electrónico')).toBeInTheDocument();
+		expect(getByText('Usuario')).toBeInTheDocument();
 		expect(getByText('Contraseña')).toBeInTheDocument();
 		expect(getByText('INICIAR SESIÓN')).toBeInTheDocument();
 

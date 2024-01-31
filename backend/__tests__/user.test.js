@@ -5,7 +5,7 @@ const server = require('../src/index');
 const UserModel = require('../src/models/user.model');
 
 const api = request(app);
-const ROUTE = '/api/v1/users';
+const ROUTE = '/api/v1';
 
 const testUser = {
 	name: 'test',
@@ -26,7 +26,7 @@ beforeAll(async () => {
 	await UserModel.deleteMany({});
 });
 
-describe('POST /users', () => {
+describe('POST /', () => {
 	describe('given a correct name, username, password and role', () => {
 		test('should create a new user and return it', async () => {
 			const res = await api
@@ -62,7 +62,7 @@ describe('POST /users', () => {
 	});
 });
 
-describe('POST /users/signin', () => {
+describe('POST /signin', () => {
 	describe('given a correct username and password', () => {
 		test('should return user and token', async () => {
 			const res = await api
@@ -109,7 +109,7 @@ describe('POST /users/signin', () => {
 	});
 });
 
-describe('GET /users', () => {
+describe('GET /', () => {
 	test('should return an array of users', async () => {
 		const res = await api
 			.get(ROUTE)

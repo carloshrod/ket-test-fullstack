@@ -1,3 +1,5 @@
+import Navbar from '@/components/layout/Navbar';
+import Chat from '@/components/ui/Chat';
 import dynamic from 'next/dynamic';
 
 const ReactPlayer = dynamic(() => import('react-player/youtube'), {
@@ -6,9 +8,22 @@ const ReactPlayer = dynamic(() => import('react-player/youtube'), {
 
 const Streaming = () => {
 	return (
-		<section>
-			<h2>{process.env.NEXT_PUBLIC_VIRTUAL_CLASS_ID}</h2>
-			<ReactPlayer url={process.env.NEXT_PUBLIC_VIDEO_URL} controls />
+		<section className='container-fluid'>
+			<div className='row'>
+				<div className='col-12 col-lg-8 mb-2'>
+					{/* Reproductor de vídeo */}
+					<ReactPlayer
+						url={process.env.NEXT_PUBLIC_VIDEO_URL}
+						controls
+						height={500}
+						width={800}
+					/>
+				</div>
+				<div className='col-12 col-lg-4'>
+					{/* Componente de chat */}
+					<Chat />
+				</div>
+			</div>
 		</section>
 	);
 };

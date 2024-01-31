@@ -8,7 +8,7 @@ const virtualClassID = process.env.NEXT_PUBLIC_VIRTUAL_CLASS_ID;
 
 const SigninForm = () => {
 	const { handleInputChange, handleSigninSubmit } = useForm({
-		email: '',
+		username: '',
 		password: '',
 	});
 	const { isAuth } = useMainContext();
@@ -25,15 +25,15 @@ const SigninForm = () => {
 			<h1 className='text-primary text-center mb-3'>KUEPA</h1>
 			<h5 className='text-center mb-4'>Ingresa a la plataforma:</h5>
 			<div className='mb-3'>
-				<label htmlFor='idEmail' className='form-label'>
-					Correo electrónico
+				<label htmlFor='idUsername' className='form-label'>
+					Usuario
 				</label>
 				<input
-					name='email'
+					name='username'
 					type='text'
 					className='form-control bg-dark'
-					id='idEmail'
-					placeholder='name@example.com'
+					id='idUsername'
+					placeholder='user1'
 					onChange={handleInputChange}
 				/>
 			</div>

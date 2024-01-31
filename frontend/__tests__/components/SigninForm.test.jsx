@@ -33,7 +33,7 @@ describe('SigninForm component', () => {
 		expect(getByText('KUEPA')).toBeInTheDocument();
 		expect(getByText('Ingresa a la plataforma:')).toBeInTheDocument();
 
-		expect(getByLabelText('Correo electrónico')).toBeInTheDocument();
+		expect(getByLabelText('Usuario')).toBeInTheDocument();
 		expect(getByLabelText('Contraseña')).toBeInTheDocument();
 		expect(getByText('INICIAR SESIÓN')).toBeInTheDocument();
 
@@ -54,13 +54,13 @@ describe('SigninForm component', () => {
 	it('should handle input changes correctly', () => {
 		const { getByLabelText } = renderWithProvider(<SigninForm />);
 
-		const emailInput = getByLabelText('Correo electrónico');
+		const userInput = getByLabelText('Usuario');
 		const passwordInput = getByLabelText('Contraseña');
 
-		fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+		fireEvent.change(userInput, { target: { value: 'test@example.com' } });
 		fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
 
-		expect(emailInput.value).toBe('test@example.com');
+		expect(userInput.value).toBe('test@example.com');
 		expect(passwordInput.value).toBe('testPassword');
 	});
 

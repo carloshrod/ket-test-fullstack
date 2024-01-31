@@ -22,6 +22,10 @@ jest.mock('next/link', () => {
 	return MockedLink;
 });
 
+jest.mock('next/router', () => ({
+	useRouter: jest.fn(),
+}));
+
 describe('RegisterForm component', () => {
 	it('should render form elements correctly', () => {
 		const { getByText, getByLabelText } = renderWithProvider(<RegisterForm />);
@@ -33,19 +37,22 @@ describe('RegisterForm component', () => {
 		expect(getByLabelText('Usuario')).toBeInTheDocument();
 		expect(getByLabelText('Contraseña')).toBeInTheDocument();
 		expect(getByLabelText('Repetir contraseña')).toBeInTheDocument();
+		expect(getByLabelText('Eres un estudiante?')).toBeInTheDocument();
 		expect(getByText('REGISTRARSE')).toBeInTheDocument();
+
 		expect(getByText('Ya tienes una cuenta?')).toBeInTheDocument();
 		expect(getByText('Inicia sesión')).toBeInTheDocument();
 	});
 
-	it('should render 2 input fields on the screen', () => {
+	it('should render 5 input fields on the screen', () => {
 		const { getAllByRole } = renderWithProvider(<RegisterForm />);
 
 		const textInputs = getAllByRole('textbox');
 		const passwordInputs = getAllByRole('textbox', { type: 'password' });
-		const inputFields = [...textInputs, ...passwordInputs];
+		const checkboxInputs = getAllByRole('checkbox');
+		const inputFields = [...textInputs, ...passwordInputs, ...checkboxInputs];
 
-		expect(inputFields).toHaveLength(4);
+		expect(inputFields).toHaveLength(5);
 	});
 
 	it('should handle input changes correctly', () => {

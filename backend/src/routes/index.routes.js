@@ -12,6 +12,6 @@ router.get('/', (_req, res) => {
     `);
 });
 
-router.use('/api/v1/users', userRoutes);
+router.use('/api/v1', userRoutes);
 
 module.exports = router;

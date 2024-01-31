@@ -34,3 +34,20 @@ input,
 button {
   color: #e2e8f0 !important;
 }
+
+.classContainer {
+  height: 100%;
+}
+
+.chatContainer {
+  min-height: 500px;
+  max-height: 500px;
+
+  input {
+    &:focus {
+      box-shadow: none !important;
+    }
+  }
+}
+
+@media (max-width: 768px) {}

@@ -4,8 +4,9 @@ exports.generateAuthToken = user => {
 	const token = sign(
 		{
 			_id: user._id,
+			name: user.name,
+			username: user.username,
 			role: user.role,
-			id_number: user.id_number,
 		},
 		process.env.JWT_SECRET_KEY,
 		{ expiresIn: '6h' }
