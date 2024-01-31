@@ -84,4 +84,4 @@ server.listen(PORT, () => {
 	console.log(`************ Server listening on port ${PORT} ************\n`);
 });
 
-module.exports = server;
+module.exports = { server, app };
