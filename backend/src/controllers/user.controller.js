@@ -2,7 +2,7 @@ const UserModel = require('../models/user.model');
 const { compare } = require('bcryptjs');
 const { generateAuthToken } = require('../utils');
 
-exports.createUser = async (req, res, next) => {
+const createUser = async (req, res, next) => {
 	try {
 		const newUser = new UserModel(req.body);
 		const savedUser = await newUser.save();
@@ -14,19 +14,7 @@ exports.createUser = async (req, res, next) => {
 	}
 };
 
-exports.getUsers = async (_req, res, next) => {
-	try {
-		const foundUsers = await UserModel.find();
-		if (foundUsers.length > 0) {
-			return res.status(200).send(foundUsers);
-		}
-		return res.status(204).send();
-	} catch (error) {
-		next(error);
-	}
-};
-
-exports.signin = async (req, res, next) => {
+const signIn = async (req, res, next) => {
 	try {
 		const { username, password } = req.body;
 		const user = await UserModel.findOne({ username });
@@ -44,3 +32,5 @@ exports.signin = async (req, res, next) => {
 		next(error);
 	}
 };
+
+module.exports = { createUser, signIn };
