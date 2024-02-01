@@ -1,4 +1,3 @@
-import Navbar from '@/components/layout/Navbar';
 import Chat from '@/components/ui/Chat';
 import dynamic from 'next/dynamic';
 
@@ -10,17 +9,16 @@ const Streaming = () => {
 	return (
 		<section className='container-fluid'>
 			<div className='row'>
-				<div className='col-12 col-lg-8 mb-2'>
-					{/* Reproductor de vídeo */}
+				<h1>{process.env.NEXT_PUBLIC_VIRTUAL_CLASS_ID}</h1>
+				<div className='col-12 col-lg-8 mb-2 mb-lg-0 playerContainer'>
 					<ReactPlayer
 						url={process.env.NEXT_PUBLIC_VIDEO_URL}
 						controls
-						height={500}
-						width={800}
+						height='100%'
+						width='100%'
 					/>
 				</div>
 				<div className='col-12 col-lg-4'>
-					{/* Componente de chat */}
 					<Chat />
 				</div>
 			</div>

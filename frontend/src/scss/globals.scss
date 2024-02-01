@@ -35,19 +35,38 @@ button {
   color: #e2e8f0 !important;
 }
 
-.classContainer {
-  height: 100%;
+.playerContainer {
+  min-height: 500px;
+  min-width: 500px;
 }
 
 .chatContainer {
-  min-height: 500px;
   max-height: 500px;
+
+  .onlineCircle {
+    width: 10px;
+    height: 10px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .chatContent,
+  .chatFooter {
+    background-color: #242830;
+
+    input {
+      background-color: #242830;
+    }
+  }
 
   input {
     &:focus {
       box-shadow: none !important;
     }
   }
-}
 
-@media (max-width: 768px) {}
+  @media (max-width: 992px) {
+    min-width: 500px !important;
+  }
+}
