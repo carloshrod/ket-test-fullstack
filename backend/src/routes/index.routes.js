@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const pkg = require('../../package.json');
 const userRoutes = require('./user.routes.js');
+const messageRoutes = require('./message.routes.js');
 
 const router = Router();
 
@@ -13,5 +14,6 @@ router.get('/', (_req, res) => {
 });
 
 router.use('/api/v1', userRoutes);
+router.use('/api/v1', messageRoutes);
 
 module.exports = router;
