@@ -1,10 +1,10 @@
-import { useMainContext } from '@/contexts/MainContext';
-import { TYPES } from '@/contexts/actions';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
-import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
+import { useMainContext } from '@/hooks/useMainContext';
+import { TYPES } from '@/contexts/actions';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const options = {

@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import useForm from '@/hooks/useForm';
 import { useEffect } from 'react';
-import { useMainContext } from '@/contexts/MainContext';
 import { useRouter } from 'next/router';
+import useForm from '@/hooks/useForm';
+import { useMainContext } from '@/hooks/useMainContext';
 
 const virtualClassID = process.env.NEXT_PUBLIC_VIRTUAL_CLASS_ID;
 

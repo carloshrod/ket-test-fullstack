@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer } from 'react';
+import { createContext, useEffect, useReducer } from 'react';
 import reducers from './reducers';
 import Cookies from 'js-cookie';
 import { TYPES } from './actions';
@@ -9,7 +9,6 @@ const MainContext = createContext(undefined);
 const initialState = {
 	isAuth: false,
 	userLogged: {},
-	users: [],
 };
 
 const MainProvider = ({ children }) => {
@@ -32,6 +31,5 @@ const MainProvider = ({ children }) => {
 	return <MainContext.Provider value={data}>{children}</MainContext.Provider>;
 };
 
-export const useMainContext = () => useContext(MainContext);
-
+export { MainContext };
 export default MainProvider;
