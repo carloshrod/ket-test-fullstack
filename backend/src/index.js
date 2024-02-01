@@ -6,11 +6,10 @@ const errorHandler = require('./middlewares/errorHandler.js');
 const { Server } = require('socket.io');
 const { createServer } = require('node:http');
 const MessageModel = require('./models/message.model.js');
-
 const connectToDB = require('./database.js');
 require('dotenv').config();
-const PORT = process.env.PORT || 5000;
 
+const PORT = process.env.PORT || 5000;
 const app = express();
 
 const server = createServer(app);
@@ -22,10 +21,10 @@ const io = new Server(server, {
 });
 
 io.on('connection', async socket => {
-	console.log('a user has connected!');
+	console.log(`User ${socket.id} has connected!`);
 
 	socket.on('disconnect', () => {
-		console.log('a user has disconnected');
+		console.log(`User ${socket.id} has disconnected!`);
 	});
 
 	socket.on('chat_message', async msg => {
@@ -47,21 +46,6 @@ io.on('connection', async socket => {
 			role: msg.role,
 		});
 	});
-
-	if (!socket.recovered) {
-		try {
-			const results = await MessageModel.find();
-			results.forEach(row => {
-				socket.emit('chat_message', {
-					body: row.body,
-					from: row.from,
-					role: row.role,
-				});
-			});
-		} catch (e) {
-			console.error(e);
-		}
-	}
 });
 
 // Middlewares
