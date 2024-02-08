@@ -5,14 +5,15 @@ const router = require('./routes/index.routes.js');
 const errorHandler = require('./middlewares/errorHandler.js');
 const { Server } = require('socket.io');
 const { createServer } = require('node:http');
-const MessageModel = require('./models/message.model.js');
 const connectToDB = require('./database.js');
+const { createMessage } = require('./controllers/message.controller.js');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-
 const server = createServer(app);
+
+// Web sockets server
 const io = new Server(server, {
 	cors: {
 		origin: 'http://localhost:3000',
@@ -28,17 +29,7 @@ io.on('connection', async socket => {
 	});
 
 	socket.on('chat_message', async msg => {
-		try {
-			const newMessage = new MessageModel({
-				body: msg.body,
-				from: msg.from,
-				role: msg.role,
-			});
-			await newMessage.save();
-		} catch (e) {
-			console.error(e);
-			return;
-		}
+		await createMessage(msg);
 
 		socket.broadcast.emit('chat_message', {
 			body: msg.body,
