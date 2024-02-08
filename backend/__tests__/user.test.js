@@ -2,6 +2,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const { server, app } = require('../src/index');
 const UserModel = require('../src/models/user.model');
+const MessageModel = require('../src/models/message.model');
 
 const api = request(app);
 const ROUTE = '/api/v1';
@@ -108,10 +109,17 @@ describe('POST /signin', () => {
 	});
 });
 
-describe('GET /', () => {
-	test('should return an array of users', async () => {
+describe('GET /messages', () => {
+	test('should return an array of messages', async () => {
+		const newMessage = new MessageModel({
+			body: 'Test body message',
+			from: 'Test username',
+			role: 'Test role',
+		});
+		await newMessage.save();
+
 		const res = await api
-			.get(ROUTE)
+			.get(`${ROUTE}/messages`)
 			.expect(200)
 			.expect('Content-Type', /application\/json/);
 
@@ -119,9 +127,8 @@ describe('GET /', () => {
 			expect.arrayContaining([
 				expect.objectContaining({
 					_id: expect.any(String),
-					name: expect.any(String),
-					username: expect.any(String),
-					password: expect.any(String),
+					body: expect.any(String),
+					from: expect.any(String),
 					role: expect.any(String),
 				}),
 			])
@@ -130,8 +137,8 @@ describe('GET /', () => {
 
 	describe('when the database is empty', () => {
 		test('should return a 204 status code and an empty body', async () => {
-			await UserModel.deleteMany({});
-			await api.get(ROUTE).expect(204);
+			await MessageModel.deleteMany({});
+			await api.get(`${ROUTE}/messages`).expect(204);
 		});
 	});
 });
